@@ -123,11 +123,10 @@ export async function getSpotifyProfile(accessToken) {
 
 export async function searchSpotify(accessToken, query) {
   const params = new URLSearchParams({
-    q: query,
-    type: "playlist",
-    limit: "20"
-  });
-
+  q: query,
+  type: "playlist",
+  limit: "10"
+});
   const response = await fetch(
     `https://api.spotify.com/v1/search?${params.toString()}`,
     {
