@@ -82,16 +82,16 @@ if (currentWeather.weatherCode === 0) {
   genres = [
     `${season} chill house`,
     `${season} dreamy indie`,
-    `${season} chill jpop`,
-    `${season} chill kpop`
+    `${season} indie pop`,
+    `${season} indie rock`
   ];
 } else if (currentWeather.weatherCode === 3) {
   // ☁️ Cloudy
   genres = [
     `${season} mellow indie`,
     `${season} cloudy alternative`,
-    `${season} mellow jpop`,
-    `${season} mellow kpop`
+    `${season} pop rock`,
+    `${season} jpop rock`
   ];
 } else if (
   currentWeather.weatherCode >= 45 &&
@@ -112,8 +112,8 @@ if (currentWeather.weatherCode === 0) {
   genres = [
     `${season} rainy indie`,
     `${season} rainy chill`,
-    `${season} rainy jpop`,
-    `${season} rainy kpop`
+    `${season} rainy songs`,
+    `${season} rainy playlist`
   ];
 } else if (
   currentWeather.weatherCode >= 71 &&
@@ -123,8 +123,8 @@ if (currentWeather.weatherCode === 0) {
   genres = [
     `${season} winter cozy`,
     `${season} snowy ambient`,
-    `${season} cozy jpop`,
-    `${season} cozy kpop`
+    `${season} winter songs`,
+    `${season} winter kpop`
   ];
 } else if (
   currentWeather.weatherCode >= 80 &&
@@ -140,7 +140,7 @@ if (currentWeather.weatherCode === 0) {
 } else if (currentWeather.weatherCode >= 95) {
   // ⛈️ Thunderstorm
   genres = [
-    `${season} dark electronic`,
+    `${season} deconstructed club`,
     `${season} dark ambient`,
     `${season} dark indie`,
     `${season} dark kpop`
@@ -179,8 +179,6 @@ const uniquePlaylists = Array.from(
 );
 
 setPlaylists(uniquePlaylists);
-
-        setPlaylists(uniquePlaylists);
 
         window.history.replaceState(
           {},
