@@ -55,17 +55,76 @@ export function getMusicMood(code) {
 }
 
 export function getMusicMoodLabel(code) {
-  if (code === 0) return "Sunny House ☀️";
-  if (code === 1 || code === 2) return "Chill House 🌤️";
-  if (code === 3) return "Indie Mellow ☁️";
-  if (code >= 45 && code <= 48) return "Ambient Chill 🌫️";
-  if (code >= 51 && code <= 67) return "Rainy Chill 🌧️";
-  if (code >= 71 && code <= 77) return "Winter Ambient ❄️";
-  if (code >= 80 && code <= 82) return "Deep House 🌧️";
-  if (code >= 95) return "Dark Electronic ⛈️";
+  const month = new Date().getMonth() + 1;
 
-  return "Chill Vibes 🎵";
+  let season;
+
+  if (month >= 3 && month <= 5) {
+    season = "Spring";
+  } else if (month >= 6 && month <= 8) {
+    season = "Summer";
+  } else if (month >= 9 && month <= 11) {
+    season = "Autumn";
+  } else {
+    season = "Winter";
+  }
+
+  if (code === 0) {
+    if (season === "Spring") return "Spring Brightness 🌸☀️";
+    if (season === "Summer") return "Summer Energy ☀️";
+    if (season === "Autumn") return "Warm Autumn ☀️🍂";
+    return "Winter Sunshine ☀️❄️";
+  }
+
+  if (code === 1 || code === 2) {
+    if (season === "Spring") return "Spring Chill 🌸🌤️";
+    if (season === "Summer") return "Summer Chill 🌤️";
+    if (season === "Autumn") return "Autumn Chill 🌤️🍂";
+    return "Winter Chill 🌤️❄️";
+  }
+
+  if (code === 3) {
+    if (season === "Spring") return "Mellow Spring 🌸☁️";
+    if (season === "Summer") return "Cloudy Summer ☁️";
+    if (season === "Autumn") return "Mellow Autumn ☁️🍂";
+    return "Cloudy Winter ☁️❄️";
+  }
+
+  if (code >= 45 && code <= 48) {
+    if (season === "Spring") return "Misty Spring 🌸🌫️";
+    if (season === "Summer") return "Misty Summer 🌫️";
+    if (season === "Autumn") return "Misty Autumn 🌫️🍂";
+    return "Misty Winter 🌫️❄️";
+  }
+
+  if (code >= 51 && code <= 67) {
+    if (season === "Spring") return "Rainy Spring 🌸🌧️";
+    if (season === "Summer") return "Rainy Summer 🌧️";
+    if (season === "Autumn") return "Rainy Autumn 🌧️🍂";
+    return "Rainy Winter 🌧️❄️";
+  }
+
+  if (code >= 71 && code <= 77) {
+    return "Snowy Winter ❄️";
+  }
+
+  if (code >= 80 && code <= 82) {
+    if (season === "Spring") return "Spring Showers 🌸🌦️";
+    if (season === "Summer") return "Summer Showers 🌦️";
+    if (season === "Autumn") return "Autumn Showers 🌦️🍂";
+    return "Winter Showers 🌦️❄️";
+  }
+
+  if (code >= 95) {
+    if (season === "Spring") return "Spring Storm ⛈️🌸";
+    if (season === "Summer") return "Summer Storm ⛈️";
+    if (season === "Autumn") return "Autumn Storm ⛈️🍂";
+    return "Winter Storm ⛈️❄️";
+  }
+
+  return `${season} Chill 🎵`;
 }
+
 
 export function getSeason() {
   const month = new Date().getMonth() + 1;
