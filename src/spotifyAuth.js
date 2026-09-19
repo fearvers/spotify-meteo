@@ -113,35 +113,40 @@ Authorization: `Bearer ${accessToken}`
 );
 
 if (!response.ok) {
-throw new Error(
-"Impossible de récupérer le profil Spotify"
-);
+  const error = await response.json();
+  console.error("SPOTIFY ERROR:", error);
+  throw new Error(
+    "Impossible de rechercher sur Spotify"
+  );
 }
 
 return await response.json();
 }
 
 export async function searchSpotify(accessToken, query) {
-const params = new URLSearchParams({
-q: query,
-type: "playlist",
-limit: "20"
-});
+  const params = new URLSearchParams({
+    q: query,
+    type: "playlist",
+    limit: "20"
+  });
 
-const response = await fetch(
-`https://api.spotify.com/v1/search?${params.toString()}`,
-{
-headers: {
-Authorization: `Bearer ${accessToken}`
-}
-}
-);
+  const response = await fetch(
+    `https://api.spotify.com/v1/search?${params.toString()}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    }
+  );
 
-if (!response.ok) {
-throw new Error(
-"Impossible de rechercher sur Spotify"
-);
-}
+  if (!response.ok) {
+    const error = await response.json();
+    console.error("SPOTIFY ERROR:", error);
 
-return await response.json();
+    throw new Error(
+      "Impossible de rechercher sur Spotify"
+    );
+  }
+
+  return await response.json();
 }
