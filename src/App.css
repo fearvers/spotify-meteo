@@ -101,4 +101,10 @@ body {
 }.playlist-title {
   font-size: 28px;
   margin: 30px 0 10px;
+}.app h1,
+.app h2,
+.app h3,
+.app h4,
+.app p {
+  color: white;
 }
