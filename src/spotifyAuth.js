@@ -116,7 +116,7 @@ export async function loginWithSpotify() {
   const params = new URLSearchParams({
     q: query,
     type: "playlist",
-    limit: "5"
+   limit: "10"
   });
 
   const response = await fetch(

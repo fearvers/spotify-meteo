@@ -1,4 +1,3 @@
-```jsx
 import { useEffect, useState } from "react";
 import "./App.css";
 
@@ -13,7 +12,8 @@ import {
   getWeather,
   getWeatherDescription,
   getMusicMood,
-  getMusicMoodLabel
+  getMusicMoodLabel,
+  getSeason
 } from "./weather";
 
 function App() {
@@ -24,10 +24,7 @@ function App() {
 
   useEffect(() => {
     async function authenticate() {
-      const params = new URLSearchParams(
-        window.location.search
-      );
-
+      const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
 
       if (!code) {
@@ -37,35 +34,99 @@ function App() {
       try {
         setLoading(true);
 
-        const accessToken =
-          await handleSpotifyCallback();
-
-        const spotifyProfile =
-          await getSpotifyProfile(accessToken);
+        const accessToken = await handleSpotifyCallback();
+        const spotifyProfile = await getSpotifyProfile(accessToken);
 
         setProfile(spotifyProfile);
 
-        const currentWeather =
-          await getWeather();
-
+        const currentWeather = await getWeather();
         setWeather(currentWeather);
 
-        const mood = getMusicMood(
-          currentWeather.weatherCode
+        const mood = getMusicMood(currentWeather.weatherCode);
+        const season = getSeason();
+
+        console.log("SEASON:", season);
+        console.log("MOOD:", mood);
+
+        let genres;
+
+        if (currentWeather.weatherCode === 0) {
+          genres = [
+            `${season} house`,
+            `${season} jpop bright`,
+            `${season} kpop dance`,
+            `${season} indie pop`
+          ];
+        } else if (
+          currentWeather.weatherCode === 1 ||
+          currentWeather.weatherCode === 2
+        ) {
+          genres = [
+            `${season} chill house`,
+            `${season} jpop chill`,
+            `${season} kpop chill`,
+            `${season} indie pop`
+          ];
+        } else if (currentWeather.weatherCode === 3) {
+          genres = [
+            `${season} indie`,
+            `${season} alternative`,
+            `${season} mellow jpop`,
+            `${season} mellow kpop`
+          ];
+        } else if (
+          currentWeather.weatherCode >= 51 &&
+          currentWeather.weatherCode <= 67
+        ) {
+          genres = [
+            `${season} rainy indie`,
+            `${season} rainy jpop`,
+            `${season} rainy kpop`,
+            `${season} rainy ambient`
+          ];
+        } else if (
+          currentWeather.weatherCode >= 80 &&
+          currentWeather.weatherCode <= 82
+        ) {
+          genres = [
+            `${season} deep house`,
+            `${season} chill house`,
+            `${season} rainy kpop`,
+            `${season} indie chill`
+          ];
+        } else if (currentWeather.weatherCode >= 95) {
+          genres = [
+            `${season} dark electronic`,
+            `${season} dark house`,
+            `${season} alternative`,
+            `${season} dark kpop`
+          ];
+        } else {
+          genres = [
+            `${season} indie`,
+            `${season} jpop`,
+            `${season} kpop`,
+            `${season} house`
+          ];
+        }
+
+        const results = await Promise.all(
+          genres.map((genre) => searchSpotify(accessToken, genre))
         );
 
-        const spotifyResults =
-          await searchSpotify(accessToken, mood);
-
-        setPlaylists(
-          spotifyResults.playlists?.items || []
+        const allPlaylists = results.flatMap(
+          (result) => result.playlists?.items || []
         );
 
-        window.history.replaceState(
-          {},
-          document.title,
-          "/"
+        const uniquePlaylists = Array.from(
+          new Map(
+            allPlaylists.map((playlist) => [playlist.id, playlist])
+          ).values()
         );
+
+        setPlaylists(uniquePlaylists);
+
+        window.history.replaceState({}, document.title, "/");
       } catch (error) {
         console.error(error);
       } finally {
@@ -86,9 +147,7 @@ function App() {
 
       {!profile ? (
         <>
-          <p>
-            Playlists adapted to the weather.
-          </p>
+          <p>Playlists adapted to the weather and season.</p>
 
           <button onClick={loginWithSpotify}>
             Connect to Spotify
@@ -100,7 +159,7 @@ function App() {
 
           {weather && (
             <div className="weather-section">
-              <h3>Weather in Dubai 🇦🇪</h3>
+              <h3>Current weather</h3>
 
               <div className="temperature">
                 {weather.temperature}°C
@@ -125,10 +184,7 @@ function App() {
 
           <div className="playlist-grid">
             {playlists.map((playlist) => (
-              <div
-                className="playlist-card"
-                key={playlist.id}
-              >
+              <div className="playlist-card" key={playlist.id}>
                 {playlist.images?.length > 0 && (
                   <img
                     src={playlist.images[0].url}
@@ -155,4 +211,3 @@ function App() {
 }
 
 export default App;
-```

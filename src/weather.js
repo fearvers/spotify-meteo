@@ -1,7 +1,15 @@
-```javascript
 export async function getWeather() {
-  const latitude = 25.2048;
-  const longitude = 55.2708;
+  const position = await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      resolve,
+      reject
+    );
+  });
+
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+
+  console.log("LOCATION:", latitude, longitude);
 
   const response = await fetch(
     `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code`
@@ -20,114 +28,59 @@ export async function getWeather() {
 }
 
 export function getWeatherDescription(code) {
-  if (code === 0) {
-    return "☀️ Clear sky";
-  }
-
-  if (code === 1 || code === 2) {
-    return "🌤️ Partly cloudy";
-  }
-
-  if (code === 3) {
-    return "☁️ Cloudy";
-  }
-
-  if (code >= 45 && code <= 48) {
-    return "🌫️ Fog";
-  }
-
-  if (code >= 51 && code <= 57) {
-    return "🌦️ Drizzle";
-  }
-
-  if (code >= 61 && code <= 67) {
-    return "🌧️ Rain";
-  }
-
-  if (code >= 71 && code <= 77) {
-    return "❄️ Snow";
-  }
-
-  if (code >= 80 && code <= 82) {
-    return "🌧️ Showers";
-  }
-
-  if (code >= 95) {
-    return "⛈️ Thunderstorm";
-  }
+  if (code === 0) return "☀️ Clear sky";
+  if (code === 1 || code === 2) return "🌤️ Partly cloudy";
+  if (code === 3) return "☁️ Cloudy";
+  if (code >= 45 && code <= 48) return "🌫️ Fog";
+  if (code >= 51 && code <= 57) return "🌦️ Drizzle";
+  if (code >= 61 && code <= 67) return "🌧️ Rain";
+  if (code >= 71 && code <= 77) return "❄️ Snow";
+  if (code >= 80 && code <= 82) return "🌧️ Showers";
+  if (code >= 95) return "⛈️ Thunderstorm";
 
   return "🌥️ Variable weather";
 }
 
 export function getMusicMood(code) {
-  if (code === 0) {
-    return "sunny house";
-  }
+  if (code === 0) return "house indie pop jpop kpop";
+  if (code === 1 || code === 2) return "indie pop kpop jpop";
+  if (code === 3) return "indie alternative mellow";
+  if (code >= 45 && code <= 48) return "ambient indie chill";
+  if (code >= 51 && code <= 67) return "rainy indie chill kpop jpop";
+  if (code >= 71 && code <= 77) return "cozy indie rnb kpop jpop";
+  if (code >= 80 && code <= 82) return "deep house electronic";
+  if (code >= 95) return "dark electronic house alternative";
 
-  if (code === 1 || code === 2) {
-    return "chill house";
-  }
-
-  if (code === 3) {
-    return "indie mellow";
-  }
-
-  if (code >= 45 && code <= 48) {
-    return "ambient chill";
-  }
-
-  if (code >= 51 && code <= 67) {
-    return "rainy chill";
-  }
-
-  if (code >= 71 && code <= 77) {
-    return "winter ambient";
-  }
-
-  if (code >= 80 && code <= 82) {
-    return "deep house";
-  }
-
-  if (code >= 95) {
-    return "dark electronic";
-  }
-
-  return "chill vibes";
+  return "indie chill";
 }
 
 export function getMusicMoodLabel(code) {
-  if (code === 0) {
-    return "Sunny House ☀️";
-  }
-
-  if (code === 1 || code === 2) {
-    return "Chill House 🌤️";
-  }
-
-  if (code === 3) {
-    return "Indie Mellow ☁️";
-  }
-
-  if (code >= 45 && code <= 48) {
-    return "Ambient Chill 🌫️";
-  }
-
-  if (code >= 51 && code <= 67) {
-    return "Rainy Chill 🌧️";
-  }
-
-  if (code >= 71 && code <= 77) {
-    return "Winter Ambient ❄️";
-  }
-
-  if (code >= 80 && code <= 82) {
-    return "Deep House 🌧️";
-  }
-
-  if (code >= 95) {
-    return "Dark Electronic ⛈️";
-  }
+  if (code === 0) return "Sunny House ☀️";
+  if (code === 1 || code === 2) return "Chill House 🌤️";
+  if (code === 3) return "Indie Mellow ☁️";
+  if (code >= 45 && code <= 48) return "Ambient Chill 🌫️";
+  if (code >= 51 && code <= 67) return "Rainy Chill 🌧️";
+  if (code >= 71 && code <= 77) return "Winter Ambient ❄️";
+  if (code >= 80 && code <= 82) return "Deep House 🌧️";
+  if (code >= 95) return "Dark Electronic ⛈️";
 
   return "Chill Vibes 🎵";
 }
-```
+
+export function getSeason() {
+  const month = new Date().getMonth() + 1;
+
+  if (month >= 3 && month <= 5) {
+    return "spring";
+  }
+
+  if (month >= 6 && month <= 8) {
+    return "summer";
+  }
+
+  if (month >= 9 && month <= 11) {
+    return "autumn";
+  }
+
+  return "winter";
+}
