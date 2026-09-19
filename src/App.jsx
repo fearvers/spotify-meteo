@@ -66,65 +66,93 @@ function App() {
 
         let genres;
 
-        if (currentWeather.weatherCode === 0) {
-          genres = [
-            `${season} house`,
-            `${season} jpop bright`,
-            `${season} kpop dance`,
-            `${season} indie pop`
-          ];
-        } else if (
-          currentWeather.weatherCode === 1 ||
-          currentWeather.weatherCode === 2
-        ) {
-          genres = [
-            `${season} chill house`,
-            `${season} jpop chill`,
-            `${season} kpop chill`,
-            `${season} indie pop`
-          ];
-        } else if (currentWeather.weatherCode === 3) {
-          genres = [
-            `${season} indie`,
-            `${season} alternative`,
-            `${season} mellow jpop`,
-            `${season} mellow kpop`
-          ];
-        } else if (
-          currentWeather.weatherCode >= 51 &&
-          currentWeather.weatherCode <= 67
-        ) {
-          genres = [
-            `${season} rainy indie`,
-            `${season} rainy jpop`,
-            `${season} rainy kpop`,
-            `${season} rainy ambient`
-          ];
-        } else if (
-          currentWeather.weatherCode >= 80 &&
-          currentWeather.weatherCode <= 82
-        ) {
-          genres = [
-            `${season} deep house`,
-            `${season} chill house`,
-            `${season} rainy kpop`,
-            `${season} indie chill`
-          ];
-        } else if (currentWeather.weatherCode >= 95) {
-          genres = [
-            `${season} dark electronic`,
-            `${season} dark house`,
-            `${season} alternative`,
-            `${season} dark kpop`
-          ];
-        } else {
-          genres = [
-            `${season} indie`,
-            `${season} jpop`,
-            `${season} kpop`,
-            `${season} house`
-          ];
-        }
+if (currentWeather.weatherCode === 0) {
+  // ☀️ Clear sky
+  genres = [
+    `${season} sunny house`,
+    `${season} sunny indie pop`,
+    `${season} bright jpop`,
+    `${season} bright kpop`
+  ];
+} else if (
+  currentWeather.weatherCode === 1 ||
+  currentWeather.weatherCode === 2
+) {
+  // 🌤️ Partly cloudy
+  genres = [
+    `${season} chill house`,
+    `${season} dreamy indie`,
+    `${season} chill jpop`,
+    `${season} chill kpop`
+  ];
+} else if (currentWeather.weatherCode === 3) {
+  // ☁️ Cloudy
+  genres = [
+    `${season} mellow indie`,
+    `${season} cloudy alternative`,
+    `${season} mellow jpop`,
+    `${season} mellow kpop`
+  ];
+} else if (
+  currentWeather.weatherCode >= 45 &&
+  currentWeather.weatherCode <= 48
+) {
+  // 🌫️ Fog
+  genres = [
+    `${season} foggy ambient`,
+    `${season} atmospheric indie`,
+    `${season} dreamy jpop`,
+    `${season} atmospheric kpop`
+  ];
+} else if (
+  currentWeather.weatherCode >= 51 &&
+  currentWeather.weatherCode <= 67
+) {
+  // 🌧️ Rain
+  genres = [
+    `${season} rainy indie`,
+    `${season} rainy chill`,
+    `${season} rainy jpop`,
+    `${season} rainy kpop`
+  ];
+} else if (
+  currentWeather.weatherCode >= 71 &&
+  currentWeather.weatherCode <= 77
+) {
+  // ❄️ Snow
+  genres = [
+    `${season} winter cozy`,
+    `${season} snowy ambient`,
+    `${season} cozy jpop`,
+    `${season} cozy kpop`
+  ];
+} else if (
+  currentWeather.weatherCode >= 80 &&
+  currentWeather.weatherCode <= 82
+) {
+  // 🌦️ Showers
+  genres = [
+    `${season} rainy house`,
+    `${season} chill house`,
+    `${season} rainy indie`,
+    `${season} rainy kpop`
+  ];
+} else if (currentWeather.weatherCode >= 95) {
+  // ⛈️ Thunderstorm
+  genres = [
+    `${season} dark electronic`,
+    `${season} dark ambient`,
+    `${season} dark indie`,
+    `${season} dark kpop`
+  ];
+} else {
+  genres = [
+    `${season} chill`,
+    `${season} indie`,
+    `${season} jpop`,
+    `${season} kpop`
+  ];
+}
 
         const results = await Promise.all(
           genres.map((genre) =>
