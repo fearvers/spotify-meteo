@@ -24,7 +24,10 @@ function App() {
 
   useEffect(() => {
     async function authenticate() {
-      const params = new URLSearchParams(window.location.search);
+      const params = new URLSearchParams(
+        window.location.search
+      );
+
       const code = params.get("code");
 
       if (!code) {
@@ -34,15 +37,28 @@ function App() {
       try {
         setLoading(true);
 
-        const accessToken = await handleSpotifyCallback();
-        const spotifyProfile = await getSpotifyProfile(accessToken);
+        const accessToken =
+          await handleSpotifyCallback();
+
+        const spotifyProfile =
+          await getSpotifyProfile(accessToken);
 
         setProfile(spotifyProfile);
 
-        const currentWeather = await getWeather();
+        const currentWeather =
+          await getWeather();
+
+        console.log(
+          "WEATHER RECEIVED:",
+          currentWeather
+        );
+
         setWeather(currentWeather);
 
-        const mood = getMusicMood(currentWeather.weatherCode);
+        const mood = getMusicMood(
+          currentWeather.weatherCode
+        );
+
         const season = getSeason();
 
         console.log("SEASON:", season);
@@ -111,22 +127,32 @@ function App() {
         }
 
         const results = await Promise.all(
-          genres.map((genre) => searchSpotify(accessToken, genre))
+          genres.map((genre) =>
+            searchSpotify(accessToken, genre)
+          )
         );
 
         const allPlaylists = results.flatMap(
-          (result) => result.playlists?.items || []
+          (result) =>
+            result.playlists?.items || []
         );
 
         const uniquePlaylists = Array.from(
           new Map(
-            allPlaylists.map((playlist) => [playlist.id, playlist])
+            allPlaylists.map((playlist) => [
+              playlist.id,
+              playlist
+            ])
           ).values()
         );
 
         setPlaylists(uniquePlaylists);
 
-        window.history.replaceState({}, document.title, "/");
+        window.history.replaceState(
+          {},
+          document.title,
+          "/"
+        );
       } catch (error) {
         console.error(error);
       } finally {
@@ -147,7 +173,9 @@ function App() {
 
       {!profile ? (
         <>
-          <p>Playlists adapted to the weather and season.</p>
+          <p>
+            Playlists adapted to the weather and season.
+          </p>
 
           <button onClick={loginWithSpotify}>
             Connect to Spotify
@@ -166,13 +194,17 @@ function App() {
               </div>
 
               <p className="weather-description">
-                {getWeatherDescription(weather.weatherCode)}
+                {getWeatherDescription(
+                  weather.weatherCode
+                )}
               </p>
 
               <p>
                 🎵 Music mood:{" "}
                 <strong>
-                  {getMusicMoodLabel(weather.weatherCode)}
+                  {getMusicMoodLabel(
+                    weather.weatherCode
+                  )}
                 </strong>
               </p>
             </div>
@@ -184,7 +216,10 @@ function App() {
 
           <div className="playlist-grid">
             {playlists.map((playlist) => (
-              <div className="playlist-card" key={playlist.id}>
+              <div
+                className="playlist-card"
+                key={playlist.id}
+              >
                 {playlist.images?.length > 0 && (
                   <img
                     src={playlist.images[0].url}
@@ -195,7 +230,9 @@ function App() {
                 <h4>{playlist.name}</h4>
 
                 <a
-                  href={playlist.external_urls.spotify}
+                  href={
+                    playlist.external_urls.spotify
+                  }
                   target="_blank"
                   rel="noreferrer"
                 >
