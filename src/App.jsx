@@ -165,9 +165,71 @@ if (currentWeather.weatherCode === 0) {
     result.playlists?.items || []
 );
 
-const validPlaylists = allPlaylists.filter(
-  (playlist) => playlist !== null && playlist.id
-);
+const seasonKeywords = {
+  spring: ["spring", "fresh", "bloom"],
+  summer: ["summer", "sun", "sunny", "tropical", "beach"],
+  autumn: ["autumn", "fall", "cozy", "rainy", "falling"],
+  winter: ["winter", "snow", "snowy", "cozy", "christmas"]
+};
+
+const weatherKeywords = {
+  0: ["sun", "sunny", "bright", "summer"],
+  1: ["chill", "dreamy", "cloudy", "sunny"],
+  2: ["chill", "dreamy", "cloudy", "sunny"],
+  3: ["cloudy", "mellow", "overcast"],
+  45: ["fog", "foggy", "mist", "ambient"],
+  46: ["fog", "foggy", "mist", "ambient"],
+  47: ["fog", "foggy", "mist", "ambient"],
+  48: ["fog", "foggy", "mist", "ambient"],
+  51: ["rain", "rainy", "chill"],
+  52: ["rain", "rainy", "chill"],
+  53: ["rain", "rainy", "chill"],
+  54: ["rain", "rainy", "chill"],
+  55: ["rain", "rainy", "chill"],
+  56: ["rain", "rainy", "chill"],
+  57: ["rain", "rainy", "chill"],
+  61: ["rain", "rainy", "chill"],
+  62: ["rain", "rainy", "chill"],
+  63: ["rain", "rainy", "chill"],
+  64: ["rain", "rainy", "chill"],
+  65: ["rain", "rainy", "chill"],
+  66: ["rain", "rainy", "chill"],
+  67: ["rain", "rainy", "chill"],
+  71: ["snow", "snowy", "winter"],
+  72: ["snow", "snowy", "winter"],
+  73: ["snow", "snowy", "winter"],
+  74: ["snow", "snowy", "winter"],
+  75: ["snow", "snowy", "winter"],
+  76: ["snow", "snowy", "winter"],
+  77: ["snow", "snowy", "winter"],
+  80: ["rain", "rainy", "shower"],
+  81: ["rain", "rainy", "shower"],
+  82: ["rain", "rainy", "shower"]
+};
+
+const seasonMatches =
+  seasonKeywords[season] || [];
+
+const weatherMatches =
+  weatherKeywords[currentWeather.weatherCode] || [];
+
+const validPlaylists = allPlaylists.filter((playlist) => {
+  if (!playlist || !playlist.id || !playlist.name) {
+    return false;
+  }
+
+  const name = playlist.name.toLowerCase();
+
+  const matchesSeason = seasonMatches.some((keyword) =>
+    name.includes(keyword)
+  );
+
+  const matchesWeather = weatherMatches.some((keyword) =>
+    name.includes(keyword)
+  );
+
+  return matchesSeason || matchesWeather;
+});
 
 const uniquePlaylists = Array.from(
   new Map(
