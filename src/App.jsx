@@ -137,14 +137,18 @@ function App() {
             result.playlists?.items || []
         );
 
-        const uniquePlaylists = Array.from(
-          new Map(
-            allPlaylists.map((playlist) => [
-              playlist.id,
-              playlist
-            ])
-          ).values()
-        );
+        const validPlaylists = allPlaylists.filter(
+  (playlist) => playlist && playlist.id
+);
+
+const uniquePlaylists = Array.from(
+  new Map(
+    validPlaylists.map((playlist) => [
+      playlist.id,
+      playlist
+    ])
+  ).values()
+);
 
         setPlaylists(uniquePlaylists);
 
