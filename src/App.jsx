@@ -133,12 +133,12 @@ function App() {
         );
 
         const allPlaylists = results.flatMap(
-          (result) =>
-            result.playlists?.items || []
-        );
+  (result) =>
+    result.playlists?.items || []
+);
 
-        const validPlaylists = allPlaylists.filter(
-  (playlist) => playlist && playlist.id
+const validPlaylists = allPlaylists.filter(
+  (playlist) => playlist !== null && playlist.id
 );
 
 const uniquePlaylists = Array.from(
@@ -149,6 +149,8 @@ const uniquePlaylists = Array.from(
     ])
   ).values()
 );
+
+setPlaylists(uniquePlaylists);
 
         setPlaylists(uniquePlaylists);
 
