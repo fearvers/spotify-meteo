@@ -1,3 +1,4 @@
+```javascript
 export async function getWeather() {
   const latitude = 25.2048;
   const longitude = 55.2708;
@@ -7,7 +8,7 @@ export async function getWeather() {
   );
 
   if (!response.ok) {
-    throw new Error("Impossible de récupérer la météo");
+    throw new Error("Unable to retrieve weather data");
   }
 
   const data = await response.json();
@@ -20,42 +21,42 @@ export async function getWeather() {
 
 export function getWeatherDescription(code) {
   if (code === 0) {
-    return "☀️ Ciel dégagé";
+    return "☀️ Clear sky";
   }
 
   if (code === 1 || code === 2) {
-    return "🌤️ Partiellement nuageux";
+    return "🌤️ Partly cloudy";
   }
 
   if (code === 3) {
-    return "☁️ Nuageux";
+    return "☁️ Cloudy";
   }
 
   if (code >= 45 && code <= 48) {
-    return "🌫️ Brouillard";
+    return "🌫️ Fog";
   }
 
   if (code >= 51 && code <= 57) {
-    return "🌦️ Bruine";
+    return "🌦️ Drizzle";
   }
 
   if (code >= 61 && code <= 67) {
-    return "🌧️ Pluie";
+    return "🌧️ Rain";
   }
 
   if (code >= 71 && code <= 77) {
-    return "❄️ Neige";
+    return "❄️ Snow";
   }
 
   if (code >= 80 && code <= 82) {
-    return "🌧️ Averses";
+    return "🌧️ Showers";
   }
 
   if (code >= 95) {
-    return "⛈️ Orage";
+    return "⛈️ Thunderstorm";
   }
 
-  return "🌥️ Temps variable";
+  return "🌥️ Variable weather";
 }
 
 export function getMusicMood(code) {
@@ -92,7 +93,9 @@ export function getMusicMood(code) {
   }
 
   return "chill vibes";
-}export function getMusicMoodLabel(code) {
+}
+
+export function getMusicMoodLabel(code) {
   if (code === 0) {
     return "Sunny House ☀️";
   }
@@ -127,3 +130,4 @@ export function getMusicMood(code) {
 
   return "Chill Vibes 🎵";
 }
+```

@@ -1,3 +1,4 @@
+```jsx
 import { useEffect, useState } from "react";
 import "./App.css";
 
@@ -76,51 +77,52 @@ function App() {
   }, []);
 
   if (loading) {
-    return <h1>Chargement...</h1>;
+    return <h1>Loading...</h1>;
   }
 
   return (
     <div className="app">
-      <h1>Spotify Météo 🌦️</h1>
+      <h1>Spotify Weather 🌦️</h1>
 
       {!profile ? (
         <>
           <p>
-            Des playlists adaptées à la météo.
+            Playlists adapted to the weather.
           </p>
 
           <button onClick={loginWithSpotify}>
-            Se connecter à Spotify
+            Connect to Spotify
           </button>
         </>
       ) : (
         <>
-          <h2>Bonjour 👋</h2>
+          <h2>Hello 👋</h2>
 
           {weather && (
             <div className="weather-section">
-              <h3>Météo à Dubaï 🇦🇪</h3>
+              <h3>Weather in Dubai 🇦🇪</h3>
 
-<div className="temperature">
-  {weather.temperature}°C
-</div>
+              <div className="temperature">
+                {weather.temperature}°C
+              </div>
 
-<p className="weather-description">
-  {getWeatherDescription(weather.weatherCode)}
-</p>
+              <p className="weather-description">
+                {getWeatherDescription(weather.weatherCode)}
+              </p>
 
               <p>
-  🎵 Ambiance musicale :{" "}
-  <strong>
-  {getMusicMoodLabel(weather.weatherCode)}
-</strong>
-</p>
+                🎵 Music mood:{" "}
+                <strong>
+                  {getMusicMoodLabel(weather.weatherCode)}
+                </strong>
+              </p>
             </div>
           )}
 
           <h2 className="playlist-title">
-  🎶 Playlists recommandées
-</h2>
+            🎶 Recommended playlists
+          </h2>
+
           <div className="playlist-grid">
             {playlists.map((playlist) => (
               <div
@@ -141,7 +143,7 @@ function App() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Écouter sur Spotify
+                  Listen on Spotify
                 </a>
               </div>
             ))}
@@ -153,3 +155,4 @@ function App() {
 }
 
 export default App;
+```
